@@ -1,5 +1,5 @@
 <template>
-  <div>mycenter.vue分线</div>
+  <div>mycenter.vueuifbiuasfciOAHVFCgi</div>
 </template>
 
 <script>
