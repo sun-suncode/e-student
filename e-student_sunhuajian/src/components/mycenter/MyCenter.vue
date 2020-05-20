@@ -1,5 +1,5 @@
 <template>
-  <div>mycenter.vue分割线</div>
+  <div>mycenter.vue分线</div>
 </template>
 
 <script>
