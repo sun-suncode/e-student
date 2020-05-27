@@ -8,9 +8,10 @@
       </div>
       <div class="user_msg">
         <div class="user_head_portrait">
-          <img src="../../assets/img/t1.jpg" alt />
+          <!-- <img :src="poto" alt /> -->
+          <el-avatar :size="30" :src="poto" >user</el-avatar>
         </div>
-        <span class="user_name">孙华建</span>
+        <span class="user_name">{{msg.username}}</span>
         <i class="fa fa-angle-down"></i>
       </div>
     </div>
@@ -19,12 +20,31 @@
 
 <script>
 export default {
-  name:"Header",
+  name: "Header",
   data() {
-    return {};
+    return {
+      msg: {
+        username: "用户111"
+      },
+      poto: ""
+    };
+  },
+  created() {
+    this.getData();
   },
   methods: {
-
+    getData() {
+      this.axios
+        .get(
+          "https://d66c3b17-6d30-400f-b650-94f7e035c587.mock.pstmn.io//api/user/information"
+        )
+        .then(res => {
+          if (res.status === 200) {
+            this.msg = res.data;
+            this.poto = require("../../assets/img/t1.jpg");
+          }
+        });
+    }
   }
 };
 </script>
@@ -61,12 +81,12 @@ header .user_head_portrait {
   vertical-align: middle;
 }
 
-header .user_head_portrait img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
+// header .head_img {
+//   display: block;
+//   width: 100%;
+//   height: 100%;
+//   border-radius: 50%;
+// }
 
 .user_name {
   margin-right: 10px;

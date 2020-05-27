@@ -5,7 +5,7 @@
       v-for="(item , index) in nav_lists"
       :key="index"
       :class="[{item_def:index===number},{my_center:index===0}]"
-      @click="[ChangeIndex(index),PushRouter(index)]"
+      @click="[changeIndex(index),pushRouter(index)]"
     >{{item}}</a>
   </nav>
 </template>
@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       number: 0,
+      activeIndex: 0,
       nav_lists: [
         "My Center",
         "基本信息",
@@ -27,7 +28,7 @@ export default {
       routers: [
         "/mycenter",
         "/basic-info",
-        "/learing-management",
+        "/learning-management",
         "/job-management",
         "/myqa",
         "/integration-center"
@@ -36,29 +37,20 @@ export default {
   },
 
   methods: {
-    ChangeIndex(index) {
+    changeIndex(index) {
       this.number = index;
     },
-    PushRouter(index) {
+    pushRouter(index) {
       this.$router.push(this.routers[index]);
     }
   },
   // watch: {
   //   $route(to) {
-  //     for (let key = 0; key < this.routers.length; key++) {
-  //       if (to.path === "/" + this.routers[key]) {
-  //         this.number = key;
-  //         console.log(key);
-  //       }
-  //     }
   //   }
   // },
   created() {
-    console.log(this.$route.path);
-    console.log(location.pathname)
-    console.log(location.hash)
     for (let key = 0; key < this.routers.length; key++) {
-      if (location.pathname === this.routers[key]) {
+      if (!location.pathname.indexOf(this.routers[key])) {
         this.number = key;
       }
     }

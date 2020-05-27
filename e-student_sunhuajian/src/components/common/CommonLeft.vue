@@ -1,16 +1,15 @@
 <template>
   <section class="common_left">
     <a href="javascript:;" class="head_photo">
-      <img src="../../../assets/img/t1.jpg" alt />
+      <img src="../../assets/img/t1.jpg" alt />
       <p>编辑</p>
     </a>
     <a
       href="javascript:;"
       v-for="(item , index) in msg"
       :key="index"
-      :id="item.id"
-      :class="[{def:index===number},msg.class]"
-      @click="[change(index),get(item.id)]"
+      :class="{def:item.router===router}"
+      @click="[changeRouter(item.router),push(item.router)]"
     >
       <i class="fa lo" :class="item.icon"></i>
       <span>{{item.title}}</span>
@@ -23,40 +22,30 @@ export default {
   props: ["msg"],
   data: function() {
     return {
-      nav: ["我的课程", "我的活动"],
-      number: 0
+      router: ""
     };
   },
   methods: {
-    change(index) {
-      this.number = index;
+    changeRouter(router) {
+      this.router = router;
     },
-    get(id) {
-      if (id == "one") {
-        this.$router.push("MyInfo");
-      } else if (id == "two") {
-        this.$router.push("AuthInfo");
-      } else if (id == "three") {
-        this.$router.push("PasswordManager");
-      } else if (id == "yi") {
-        this.$router.push("MyQues");
-      } else if (id == "er") {
-        this.$router.push("MyAnswer");
-      } else if (id == "aa") {
-        this.$router.push("MyCourse");
-      } else if (id == "bb") {
-        this.$router.push("MyActivity");
-      }
+    push(router) {
+      this.$router.push(router);
     }
+  },
+  created() {
+    this.router = this.$route.path;
   }
 };
 </script>
 
 <style scoped lang="less">
 /* 页面左侧区域的样式 */
+
 .common_left {
   width: 370px;
   min-height: 770px;
+  margin-right: 25px;
   text-align: center;
   background-color: #ffffff;
 }
@@ -71,7 +60,7 @@ export default {
   font-weight: bold;
 }
 .common_left a:hover {
-  color: #00aaff;
+  color: #9bc604;
 }
 .common_left .head_photo {
   width: 135px;
@@ -92,7 +81,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.4);
 }
 .common_left .head_photo p:hover {
-  color: #00aaff;
+  color: #9bc604;
 }
 .common_left .head_photo img {
   display: block;
@@ -101,7 +90,7 @@ export default {
 }
 
 .common_left a.def {
-  color: #00aaff;
+  color: #9bc604;
 }
 .lo {
   margin-right: 15px;
