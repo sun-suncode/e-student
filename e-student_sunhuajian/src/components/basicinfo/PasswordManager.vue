@@ -3,10 +3,7 @@
     <div class="password_wrapper login_password_wrapper">
       <div class="password_box login_password_box">
         <span class="password_title login_password_title">登陆密码</span>
-        <span
-          class="password_write login_password_write"
-          @click="showForm('login_password_form')"
-        >
+        <span class="password_write login_password_write" @click="showForm('login_password_form')">
           <i class="fa fa-pencil"></i>编辑
         </span>
       </div>
@@ -49,17 +46,14 @@
           />
         </p>
         <span class="button submit_button">确认修改</span>
-        <span class="button cancel_button"  @click="hideForm('login_password_form')">取消修改</span>
+        <span class="button cancel_button" @click="hideForm('login_password_form')">取消修改</span>
       </form>
     </div>
     <div class="password_wrapper apply_password_wrapper">
       <div class="password_box apply_password_box">
         <span class="password_title apply_password_title">支付密码</span>
-        <span
-          class="password_write apply_password_write"
-          @click="showForm('apply_password_form')"
-        
-          ><i class="fa fa-pencil"></i>编辑
+        <span class="password_write apply_password_write" @click="showForm('apply_password_form')">
+          <i class="fa fa-pencil"></i>编辑
         </span>
       </div>
       <form
@@ -105,8 +99,7 @@
           <input class="input" type="text" name="code_num" id="code_num" placeholder="请输入您获取的验证码" />
         </p>
         <span class="button submit_button">确认修改</span>
-        <span class="button cancel_button"   @click="hideForm('apply_password_form')"
-        >取消修改</span>
+        <span class="button cancel_button" @click="hideForm('apply_password_form')">取消修改</span>
       </form>
     </div>
   </section>

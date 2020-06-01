@@ -42,10 +42,16 @@
     </section>-->
     <!-- <section v-if="!show"> -->
     <section class="basic_information_right_copyreader">
-      <form action method="POST" enctype="multipart/form-data">
+      <form
+        action
+        method="POST"
+        enctype="multipart/form-data"
+        :model="myInfoFormValue"
+        autocomplete="off"
+      >
         <p class="user_name_box">
           <label for="name">姓名</label>
-          <input type="text" id="name" name="username" value="孙华建" disabled />
+          <input type="text" id="name" name="username" :value="myInfoFormValue.name" disabled />
           <span class="copyreader" v-on:click="copyreader()">
             <i class="fa fa-pencil mr"></i>编辑
           </span>
@@ -58,24 +64,18 @@
             id="birthday"
             name="userbirthday"
             placeholder="本项不可输入，当写完身份证信息后自动同步出生日期"
-            value
+            :value="myInfoFormValue.birthday"
           />
         </p>
         <div class="sex">
           <label for="sex">性别</label>
-
-          <!-- <el-select  placeholder="活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-          </el-select>-->
-
-          <input type="text" id="sex" name="usersex" value="男" disabled />
+          <input type="text" id="sex" name="usersex" :value="myInfoFormValue.sex" disabled />
           <div class="choose_sex btn">
             <i class="fa fa-angle-down"></i>
             <div class="choose_sex_box">
               <option disabled value>请选择</option>
-              <option class="sex_choose" value="男">男</option>
-              <option class="sex_choose" value="女">女</option>
+              <option class="sex_choose" value="男" @click="changeSex(sex,0)">男</option>
+              <option class="sex_choose" value="女" @click="changeSex(sex,1)">女</option>
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@
             id="phonenumber"
             name="user_phonenumber"
             class="user_phonenum"
-            value="12345678900"
+            :value="myInfoFormValue.phonenumber"
             disabled
           />
           <span class="verification">
@@ -96,19 +96,32 @@
         </p>
         <p>
           <label for="email">邮箱</label>
-          <input type="text" id="email" name="user_email" value="123456789@qq.com" disabled />
+          <input type="text" id="email" name="user_email" :value="myInfoFormValue.mail" disabled />
         </p>
         <p>
           <label for="id_card">身份证</label>
-          <input type="text" id="id_card" name="use_id" value="12345678912345678X" disabled />
+          <input
+            type="text"
+            id="id_card"
+            name="use_id"
+            v-model="myInfoFormValue.idcard"
+            @blur="getBirthday(myInfoFormValue.idcard)"
+            disabled
+          />
         </p>
         <p>
           <label for="wechat">微信</label>
-          <input type="text" id="wechat" name="use_wechat" value="12345678900" disabled />
+          <input
+            type="text"
+            id="wechat"
+            name="use_wechat"
+            :value="myInfoFormValue.wechatnumber"
+            disabled
+          />
         </p>
         <p>
           <label for="qq">QQ</label>
-          <input type="text" id="qq" name="use_qq" value="123456789" disabled />
+          <input type="text" id="qq" name="use_qq" :value="myInfoFormValue.qqnumber" disabled />
         </p>
       </form>
       <p>
@@ -125,40 +138,75 @@ export default {
   components: {},
   data() {
     return {
-      show: true
+      show: true,
+      myInfoFormValue: {
+        name: "孙华建",
+        birthday: "1999年02月09日",
+        sex: "男",
+        phonenumber: "12345678900",
+        mail: "1369860716@qq.com",
+        idcard: "411256199902095544",
+        wechatnumber: "sunhuajian123456",
+        qqnumber: "1369860716"
+      },
+      sex: ["男", "女"],
+      num: 0
     };
   },
   methods: {
     copyreader() {
       let inputs = document.querySelectorAll("input");
       console.log(inputs);
-      inputs.forEach(function(index) {
-        index.setAttribute(
+      inputs.forEach(function(item, index) {
+        item.setAttribute(
           "style",
           "border: 1px solid gray !important;padding-left:14px"
         );
-        index.disabled = "";
+        if (index === 1) {
+          item.disabled = "true";
+        } else {
+          item.disabled = "";
+        }
       });
       let btns = document.querySelectorAll(".btn");
       console.log(btns);
-      btns.forEach(function(index) {
-        index.setAttribute("style", "display:inline-block");
+      btns.forEach(function(item) {
+        item.setAttribute("style", "display:inline-block");
       });
     },
     disapper() {
       let inputs = document.querySelectorAll("input");
       console.log(inputs);
-      inputs.forEach(function(index) {
-        index.setAttribute("style", "border: 0px !important;padding-left:15px");
-        index.disabled = "true";
+      inputs.forEach(function(item) {
+        item.setAttribute("style", "border: 0px !important;padding-left:15px");
+        item.disabled = "true";
       });
       let btns = document.querySelectorAll(".btn");
       console.log(btns);
-      btns.forEach(function(index) {
-        index.setAttribute("style", "display:none");
+      btns.forEach(function(item) {
+        item.setAttribute("style", "display:none");
       });
+    },
+    changeSex(sex, num) {
+      console.log(sex, num);
+      this.num = num;
+      this.myInfoFormValue.sex = sex[num];
+    },
+    getBirthday(birthday) {
+      console.log(birthday);
+      let data =
+        birthday.substr(6, 4) +
+        "年" +
+        birthday.substr(10, 2) +
+        "月" +
+        birthday.substr(12, 2) +
+        "日";
+      this.myInfoFormValue.birthday = data;
+      // console(a);
+      // stringObject.substr(start [, length ])
     }
-  }
+  },
+
 };
 </script>
 
@@ -177,8 +225,8 @@ export default {
 .mr {
   margin-right: 15px;
 }
-.btn{
-    display: none;
+.btn {
+  display: none;
 }
 // form表单的样式
 
@@ -199,6 +247,8 @@ export default {
 .basic_information_right_copyreader .sex label {
   display: inline-block;
   width: 80px;
+  height: 60px;
+  line-height: 60px;
   font-size: 20px;
   text-align: right;
   margin-right: 25px;
@@ -215,9 +265,12 @@ export default {
 .basic_information_right_copyreader .sex input {
   width: 520px;
   height: 55px;
+  line-height: 55px;
   font-size: 18px;
+  outline: none;
   padding-left: 15px;
   color: black;
+  vertical-align: middle;
   background-color: #ffffff;
   box-sizing: border-box;
   border: 0px solid grey;
@@ -237,7 +290,7 @@ export default {
   height: 55px;
   position: absolute;
   right: 170px;
-  top: 0px;
+  top: 4px;
   line-height: 55px;
   box-sizing: border-box;
   text-align: center;
@@ -246,12 +299,12 @@ export default {
 }
 .basic_information_right_copyreader .get_code {
   display: block;
-   display: none;
-  width: 200px;
-  height: 55px;
+  display: none;
+  width: 198px;
+  height: 56px;
   position: absolute;
-  right: -4px;
-  top: 0px;
+  right: -2px;
+  top: 4px;
   line-height: 55px;
   box-sizing: border-box;
   text-align: center;
@@ -265,7 +318,7 @@ export default {
 }
 .basic_information_right_copyreader .sub {
   display: inline-block;
-   display: none;
+  display: none;
   width: 215px;
   height: 58px;
   color: #fff;
@@ -281,7 +334,7 @@ export default {
 }
 .basic_information_right_copyreader .cancel {
   display: inline-block;
-   display: none;
+  display: none;
   width: 215px;
   height: 58px;
   font-size: 20px;
@@ -304,13 +357,15 @@ export default {
   line-height: 55px;
   text-align: center;
   position: absolute;
-  right: 21px;
+  right: 25px;
+  top: 5px;
   font-size: 24px;
   box-sizing: border-box;
   border-left: 0;
 }
-.choose_sex{
-     display: none;
+
+.choose_sex {
+  display: none;
 }
 .basic_information_right_copyreader .choose_sex:hover {
   background-color: #f4f4f4;

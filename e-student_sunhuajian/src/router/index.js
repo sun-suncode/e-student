@@ -20,7 +20,15 @@ Router.prototype.push = function push(location) {
 const router = new Router({
     mode: "history",
     routes: [
-        {
+        // {
+        //     path: '/', redirect: '/login',
+        //     component: () => import('../components/Login/Login.vue')
+        // },
+        // {
+        //     path: '/login', name: 'Login',
+        //     component: () => import('../components/Login/Login.vue')
+        // },
+          {
             path: '/', redirect: '/mycenter',
             component: () => import('../components/mycenter/MyCenter.vue')
         },
@@ -124,7 +132,7 @@ const router = new Router({
                 name: "MyQuestion",
                 redirect: "my-question",
                 component: () => import('../components/myqa/MyQuestion.vue'),
-            },{
+            }, {
 
                 path: "my-question",
                 name: "MyQuestion",
@@ -136,7 +144,7 @@ const router = new Router({
                 name: "MyAnswer",
                 component: () => import('../components/myqa/MyAnswer.vue'),
             }
-        ]
+            ]
         },
         {
             path: "/integration-center",

@@ -2,10 +2,9 @@
   <section>
     <Header></Header>
     <Nav></Nav>
-    <main class="main">
+    <section class="all_content">
       <router-view></router-view>
-      
-    </main>
+    </section>
     <Footer></Footer>
   </section>
 </template>
@@ -21,13 +20,14 @@ export default {
     Header,
     Nav,
     Footer
-  }
+  },
+  
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.main {
+.all_content {
   display: flex;
   padding: 35px 0px;
   background-color: #f4f4f4;
